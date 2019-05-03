@@ -15,7 +15,8 @@ namespace NBCC_WMAD_Console
         private static void LoadMenu()
         {
             Menu.menuDictionary.Add(0, "Exit");
-            Menu.menuDictionary.Add(1, "About the Console");            
+            Menu.menuDictionary.Add(1, "About the Console");
+            Menu.menuDictionary.Add(2, "Car Builder");
         }
 
         static void Main(string[] args)
@@ -33,13 +34,60 @@ namespace NBCC_WMAD_Console
                         AboutThisApp();
                         break;
                     //Add more options in the menu here
+                    case 2:
+                        CarBuilder();
+                        break;
                 }
             }
 
             Out.P("Press any key to exit.");
             Console.ReadLine();
         }
+
+        //I want to store the cars that I've created
+        static List<Car> myCars = new List<Car>();
+
+        private static void CarBuilder()
+        {
+            string userCarType = In.GetString("Provice a car Type (ice Car, Truck, Van:\n");
+            int userNumberOfDoors = In.GetInt("Provice the number of doors: ");
+            int userCarSpeed = In.GetInt("Provide the car speed: ");
+            
+
+            Car car = new Car();
+
+            car.CarType = userCarType;
+            car.NumOffDoors = userNumberOfDoors;
+            car.Speed = userCarSpeed;
+
+            Out.P("****************************");
+            Out.P($"The car created is:\nType: {car.CarType}" +
+                $"\nNumber of doors: {car.NumOffDoors}" +
+                $"\nSpeed: {car.Speed}" +
+                $"\nPrice: {car.Price.GetValueOrDefault()}");
+            Out.P("****************************");
+
+            myCars.Add(car);
+        
+            //Vamos imprimir qtos carros tenho na minha colecao
+            Out.P($"I have a car count in my list of: {myCars.Count}");
+
+            string countCard = In.GetString("Do you want to list all cars? y/n:");
+            if(countCard.ToLower() == "y")
+            {
+                foreach (Car item in myCars)
+                {
+                    Out.P($"Type: {item.CarType}\n Doors: {item.NumOffDoors}\n Speed: {item.Speed} km/h\n Year: {item.Yeay}\n Price: {item.Price.GetValueOrDefault().ToString("c")}");
+                }
                 
+            }
+            else
+            {
+                LoadMenu();
+            }
+
+        }
+
         #region [My Functionality]
 
         /*
